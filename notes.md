@@ -1,0 +1,7 @@
+- Informaiton on BreweryDB
+    - using the Sandbox database option
+        - Sandbox URL: https://sandbox-api.brewerydb.com/v2/
+        - Sandbox Key: d9d7c24e535c3576e57a73e1d4093273
+        - Requests: 10,000/day
+    - it is required to use the sandbox key for every database request
+    - the key acts as a password

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>U.S. of Beer</title>
+    <link rel="stylesheet" href="style.css"> 
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+</head>
+<body>    
+    <h1>The United States of Breweries</h1>    
+    <h2>Find all the best breweries in any city</h2>
+    <div class="container">
+        <h3>Start your search below</h3>
+        <div class="search">
+            <input type="text" class="search-box" placeholder="Enter a State">
+            <input type="submit" class="search-button" value="Search for Breweries">
+        </div>
+    </div>
+        <div class="search-results"></div>
+        <div class="search-in-progress">Retrieving a List of Breweries</div>
+    <div class="brewery-info">
+        <div class="info-header">
+            <div id="brewery-close">X</div>
+        </div>
+        <div class="info-body">
+            <div class="info-content" id="name"></div>
+            <div class="info-content">
+                <div class="label">Address</div>
+                <div class="data" id="street"></div>
+                <div class="data" id="city"></div>
+                <div class="data" id="state"></div>
+            </div>
+            <div class="info-content">
+                <div class="label">Type</div>
+                <div class="data" id="type"></div>
+            </div>
+            <div class="info-content">
+                <div class="label">Phone</div>
+                <div class="data" id="phone"></div>
+            </div>
+            <div class="info-content" id="website">
+                <div class="label">Website</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app2.js"></script>
+</body>
+</html>
