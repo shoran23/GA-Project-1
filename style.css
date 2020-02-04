@@ -99,6 +99,34 @@ a {
     font-weight: 200;
 }
 
+.results-container {
+    width: 1025px;
+    background-color: rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    opacity: 0;
+}
+
+.results-header {
+    width: 50%;
+    height: 100px;
+    background-color: rgba(0,0,0,0.75);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 5px;
+}
+
+.results-label {
+    color: whitesmoke;
+    font-size: 18px;
+
+}
+
 .search-results {
     /*border: 1px solid lightgray;*/
     width: 1000px;
@@ -106,14 +134,13 @@ a {
     margin-top: 10px;
     align-items: center;
     overflow: auto;
-    opacity: 0;
 }
 
 .search-in-progress {
     position: absolute;
     top: 355px;
-    left: 460px;
-    width: 1000px;
+    left: 448px;
+    width: 1025px;
     height: 600px;
     background-color: rgba(0,0,0,0.75);
     color: whitesmoke;
@@ -158,6 +185,24 @@ a {
     z-index: 1;
     background-color: rgba(0,0,0,0.75);
     border-right: 2px solid  rgba(2,122,199,0.75);
+    border-bottom: 2px solid rgba(2,122,199,0.75);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+}
+
+.filter-info {
+    position: absolute;
+    top: 0;
+    left: 69%;
+    width: 600px;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.75);
+    border-left: 2px solid  rgba(2,122,199,0.75);
+    border-bottom: 2px solid rgba(2,122,199,0.75);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -176,7 +221,7 @@ a {
 
 .info-body {
     width: 90%;
-    height: 100%;
+    height: 90%;
     border: 1px solid whitesmoke;
     margin-top: 10px;
     background-color: rgba(0,0,0,1);
@@ -207,7 +252,61 @@ a {
     overflow: auto;
 }
 
+.filter-header {
+    width: 100%;
+    height: 55px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.filter-body {
+    width: 90%;
+    height: 90%;
+    border: 1px solid whitesmoke;
+    margin-top: 10px;
+    background-color: rgba(0,0,0,1);
+}
+
+.filter-label {
+    height: 10%;
+    color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.filter-container {
+    max-height: 78%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+}
+
+.city-results, .zip-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+
 #brewery-close {
+    width: 10%;
+    height: 50px;
+    border: 1px solid gray;
+    background-color: red;
+    font-size: 36px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: whitesmoke;
+}
+
+#filter-close {
     width: 10%;
     height: 50px;
     border: 1px solid gray;
@@ -223,6 +322,22 @@ a {
 #name {
     font-size: 30px;
     text-align: center;
+}
+
+#results-filter {
+    background-color: gray;
+}
+
+#results-clear {
+    background-color: red;
+}
+
+#filter-city, #filter-zip, #filter-type {
+    background-color: gray;
+}
+
+#city, #zip, #type{
+    width: 175px;
 }
 
 

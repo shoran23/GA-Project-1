@@ -13,7 +13,7 @@
 </head>
 <body>    
     <h1>The United States of Breweries</h1>    
-    <h2>Find all the best breweries in any city</h2>
+    <h2>Find all the best breweries in any state</h2>
     <div class="container">
         <h3>Start your search below</h3>
         <div class="search">
@@ -21,8 +21,17 @@
             <input type="submit" class="search-button" value="Search for Breweries">
         </div>
     </div>
-        <div class="search-results"></div>
-        <div class="search-in-progress">Retrieving a List of Breweries</div>
+        <div class="results-container">
+            <div class="results-header">
+                <div class="results-label">Result Options</div>
+                <div class="result-buttons">>
+                    <button id="results-filter">Filter Results</button>
+                    <button id="results-clear">Clear Results</button>
+                </div>
+            </div>
+            <div class="search-results"></div>
+        </div>
+        <div class="search-in-progress">Retrieving Breweries</div>
     <div class="brewery-info">
         <div class="info-header">
             <div id="brewery-close">X</div>
@@ -48,7 +57,26 @@
             </div>
         </div>
     </div>
-
+    <div class="filter-info">
+        <div class="filter-header">
+            <div id="filter-close">X</div>
+        </div>
+        <div class="filter-body">
+            <div class="filter-label" id="name">Filter Options</div>
+            <div class=filter-container id="filter-by-city">
+                <button id="filter-city">By City</button>
+                <div class="city-results"></div>
+            </div>
+            <div class=filter-container id="filter-by-zip">
+                <button id="filter-zip">By Zip Code</button>
+                <div class="zip-results"></div>
+            </div>
+            <div class=filter-container id="filter-by-type">
+                <button id="filter-type">By Type</button>
+                <div class="type-results"></div>
+            </div>
+        </div>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>

@@ -3,12 +3,15 @@ console.log("Javascript Loaded");
 
 // arrays
 let breweryList = [];
+let cityList = []
 
 // global variables
 let userInput = "";
 let $searchResults = $(".search-results");
 let currentBrewery = 0;
 let state = "";
+let showCities = false;
+let showZips = false;
 
 // class
 class Brewery {
@@ -55,11 +58,11 @@ const showBreweryInfo = (event) => {
     $("#website").empty();
     // append the new link
     let $label = $("<div>").text("Website").addClass("label");
-    let $website = $(`<a id="link" href=${breweryList[currentBrewery].website}>${breweryList[currentBrewery].website}</a>`);
+    let $website = $(`<a id="link" target="_blank" href=${breweryList[currentBrewery].website}>${breweryList[currentBrewery].website}></a>`);
     $("#website")
         .append($label)
         .append($website);
-    // animate show brwery info
+    // animate show brewery info
     $(".brewery-info").animate({opacity: "1"});
 
 }
@@ -67,6 +70,27 @@ const showBreweryInfo = (event) => {
 // hide brewery info
 const hideBreweryInfo = () => {
     $(".brewery-info").animate({opacity: "0"});
+}
+
+// show filter options
+const showFilterOptions = () => {
+    // animate show brewery info
+    $(".filter-info").animate({opacity: "1"});
+}
+
+// hide filter options
+const hideFilterOptions = () => {
+    // animate hide filter options
+    $(".filter-info").animate({opacity: "0"});
+}
+
+
+// reset results
+const resetResults = () => {
+    // clear the brewery list
+    clearBreweryList();
+    // hide the results container
+    $(".results-container").css("opacity","0");
 }
 
 // show no results
@@ -77,12 +101,72 @@ const showNoResults = () => {
     // append the no results div to the search results
     $(".search-results").append($noResults);
     // show the brewery list
-    $(".search-results").animate({opacity: "1"});
+    $(".results-container").animate({opacity: "1"});
     // hide search in progress
     $(".search-in-progress").animate({opacity: "0"});
     $(".search-in-progress").css("z-index","-1");
 
 }
+
+/* filter by city *********************************************************************************************/
+const filterByCity = () => {
+    for(let i=0;i<breweryList.length;i++){
+        let $city = $(`<button>${breweryList[i].city}</button>`)
+            .attr("id","city");
+        // append results to city results
+        $(".city-results").append($city);
+    }
+    // set variable
+    showCities = true;
+}
+
+const hideCities = () => {
+    // remove the city list
+    $(".city-results").empty();
+    // set variables
+    showCities = false;
+}
+
+const toggleCities = () => {
+    if(showCities === false) {
+        filterByCity();
+    } else {
+        hideCities();
+    }
+}
+
+/* filter by zip *********************************************************************************************/
+const filterByZips = () => {
+    // hide cities
+    hideCities();
+    // filter zip codes
+    for(let i=0;i<breweryList.length;i++){
+        let $zip = $(`<button>${breweryList[i].zip}</button>`)
+            .attr("id","zip");
+        // append results to city results
+        $(".zip-results").append($zip);
+    }
+    // set variable
+    showZips = true;
+}
+
+const hideZips = () => {
+    // remove the city list
+    $(".zip-results").empty();
+    // set variables
+    showZips = false;
+}
+
+const toggleZips = () => {
+    if(showZips === false) {
+        filterByZips();
+    } else {
+        hideZips();
+    }
+}
+
+
+
 
 // create brewery list
 const createBreweryList = () => {
@@ -105,13 +189,11 @@ const createBreweryList = () => {
         $("#show-info"+i).on("click",showBreweryInfo);
     }
     // show the brewery list
-    $(".search-results").animate({opacity: "1"});
+    $(".results-container").animate({opacity: "1"});
     // hide search in progress
     $(".search-in-progress").animate({opacity: "0"});
     $(".search-in-progress").css("z-index","-1");
 }
-
-
 
 // search database by state
 const searchByState = (input) => {
@@ -163,10 +245,10 @@ const searchByState = (input) => {
 
 const determineStateAbb = (input) => {
     // set input to uppercase
-    input.toUpperCase();
+    let inputUpper = input.toUpperCase();
     let state = "";
     // switch between all state possibility
-    switch(input) {
+    switch(inputUpper) {
         case "AL": {state = "Alabama";break;}
         case "AK": {state = "Alaska";break;}
         case "AZ": {state = "Arizona";break;}
@@ -209,15 +291,24 @@ const determineStateAbb = (input) => {
         case "TN": {state = "Tennessee";break;}
         case "TX": {state = "Texas";break;}
         case "UT": {state = "Utah";break;}
+        case "VA": {state = "Virgina";break;}
         case "VT": {state = "Vermont";break;}
         case "WA": {state = "Washington";break;}
         case "WV": {state = "West Virginia";break;}
         case "WI": {state = "Wisconsin";break;}
         case "WY": {state = "Wyoming";break;}
         case "DC": {state = "District of Columbia";break;}
+        default: {state = "Unknown";break;}
     }
     // search by state
-    searchByState(state);
+    if(state === "Unknown"){
+        clearBreweryList();
+        $(".search-in-progress").css("z-index","1");
+        $(".search-in-progress").css("opacity","1");
+        setTimeout(showNoResults,2000);
+    } else {
+        searchByState(state);
+    }
 }
 
 // determine search
@@ -239,4 +330,9 @@ $(() => {
 
     $('.search-button').on("click",determineSearch);
     $('#brewery-close').on("click",hideBreweryInfo);
+    $('#results-clear').on("click",resetResults);
+    $('#results-filter').on("click",showFilterOptions);
+    $('#filter-close').on("click",hideFilterOptions);
+    $('#filter-city').on("click",toggleCities);
+    $('#filter-zip').on("click",toggleZips);
 });
