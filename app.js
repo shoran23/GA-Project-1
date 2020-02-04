@@ -123,6 +123,7 @@ const searchByState = (input) => {
         url: `https://brianiswu-open-brewery-db-v1.p.rapidapi.com/breweries?by_state=${input}`,
         method: "GET",
         data: {"$limit": 500},
+        limit: 200,
         headers: {
             "x-rapidapi-host": "brianiswu-open-brewery-db-v1.p.rapidapi.com",
             "x-rapidapi-key": "b23d5fc7acmsh72f6c5cdd0d0545p1c4890jsndc70e71ceed2"
