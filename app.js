@@ -64,7 +64,6 @@ const showBreweryInfo = (event) => {
         .append($website);
     // animate show brewery info
     $(".brewery-info").animate({opacity: "1"});
-
 }
 
 // hide brewery info
@@ -164,9 +163,6 @@ const toggleZips = () => {
         hideZips();
     }
 }
-
-
-
 
 // create brewery list
 const createBreweryList = () => {
