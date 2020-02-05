@@ -3,7 +3,9 @@ console.log("Javascript Loaded");
 
 // arrays
 let breweryList = [];
-let cityList = []
+let cityList = [];
+let typeList = [];
+
 
 // global variables
 let userInput = "";
@@ -12,8 +14,9 @@ let currentBrewery = 0;
 let state = "";
 let showCities = false;
 let showZips = false;
+let showTypes = false;
 
-// class
+// classes
 class Brewery {
     constructor(name,type,street,city,state,zip,phone,website,id) {
         this.name = name;
@@ -27,6 +30,20 @@ class Brewery {
         this.id = id;
     };
 };
+
+class City {
+    constructor(name,amount){
+        this.name = name;
+        this.amount = amount;
+    }
+}
+
+class Type {
+    constructor(name,amount){
+        this.name = name;
+        this.amount = amount;
+    }
+}
 
 // clear brewery list
 const clearBreweryList = () => {
@@ -58,7 +75,7 @@ const showBreweryInfo = (event) => {
     $("#website").empty();
     // append the new link
     let $label = $("<div>").text("Website").addClass("label");
-    let $website = $(`<a id="link" target="_blank" href=${breweryList[currentBrewery].website}>${breweryList[currentBrewery].website}></a>`);
+    let $website = $(`<a id="link" target="_blank" href=${breweryList[currentBrewery].website}>${breweryList[currentBrewery].website}</a>`);
     $("#website")
         .append($label)
         .append($website);
@@ -94,6 +111,8 @@ const resetResults = () => {
 
 // show no results
 const showNoResults = () => {
+    // clear the array
+    clearBreweryList();
     // create the no results div
     let $noResults = $("<div>").addClass("result-item");
     $noResults.text("No Results Found");
@@ -107,25 +126,88 @@ const showNoResults = () => {
 
 }
 
+/* Recreate Brewery List ****************************************************************************************/
+const recreateBreweryList = (arr) => {
+    $(".search-results").empty();
+    for(let i=0;i<arr.length;i++) {
+        // create HTML elements
+        let $resultItem = $("<div>").addClass("result-item");
+        let $resultInfo = $("<div>").addClass("result-info");
+        let $resultButton = $(`<button>Get More Info</button>`).attr("id","show-info"+i);
+        // append brewery name and city/state to the result info variable
+        $resultInfo.append(`<h4>${arr[i].name}</h4>`);
+        $resultInfo.append(`<p>${arr[i].city}, ${arr[i].state}</p>`);
+        // append result info to result item
+        $resultItem.append($resultInfo);
+        // append buttom to result item
+        $resultItem.append($resultButton);
+        // append div to 'search results
+        $(".search-results").append($resultItem);
+        // set listener on button
+        $("#show-info"+i).on("click",showBreweryInfo);
+    }
+    // show the brewery list
+    $(".results-container").animate({opacity: "1"});
+    // hide search in progress
+    $(".search-in-progress").animate({opacity: "0"});
+    $(".search-in-progress").css("z-index","-1");
+}
+
 /* filter by city *********************************************************************************************/
+const setResultsByCity = (event) => {
+    // set current city
+    let $currenCityFullId = $(event.currentTarget).attr("id");
+    let $currentCityId = $currenCityFullId.substr(4);   // need to rework this
+    let currentCity = Number($currentCityId);
+    let arr = [];
+    // create an array of html elements for the cities
+    for(let i=0;i<cityList.length;i++){
+        if(breweryList[i].city === cityList[currentCity].name){
+            arr.push(breweryList[i]);
+        }
+    }
+    // recreate the brewery listr
+    recreateBreweryList(arr);
+}
 const filterByCity = () => {
+    // hide other lists
+    hideTypes();
+    // clear city list
+    cityList = [];
+    let uniqueCityList = [];
+    // filter cities
     for(let i=0;i<breweryList.length;i++){
-        let $city = $(`<button>${breweryList[i].city}</button>`)
-            .attr("id","city");
+        let amount = 0;
+        for(let j=0;j<breweryList.length;j++){
+            if(breweryList[i].city === breweryList[j].city){
+               amount = amount + 1;
+            }
+        }
+        cityList.push(new City(breweryList[i].city,amount));
+    }
+    // remove duplicates from cityList ======================================
+
+
+
+
+    // append city list to html
+    for(let city=0;city<cityList.length;city++){
+        let $city = $(`<button>${cityList[city].name} (${cityList[city].amount})</button>`)
+            .attr("id","city"+city)
+            .addClass("city");
         // append results to city results
-        $(".city-results").append($city);
+        $("#city-results").append($city);
+        $("#city"+city).on("click",setResultsByCity);
     }
     // set variable
     showCities = true;
 }
-
 const hideCities = () => {
     // remove the city list
-    $(".city-results").empty();
+    $("#city-results").empty();
     // set variables
     showCities = false;
 }
-
 const toggleCities = () => {
     if(showCities === false) {
         filterByCity();
@@ -134,37 +216,67 @@ const toggleCities = () => {
     }
 }
 
-/* filter by zip *********************************************************************************************/
-const filterByZips = () => {
-    // hide cities
+/* filter by type *********************************************************************************************/
+const setResultsByType = (event) => {
+    // set current city
+    let $currenCityFullId = $(event.currentTarget).attr("id");
+    let $currentCityId = $currenCityFullId.substr(4);   // need to rework this
+    let currentType = Number($currentCityId);
+    let arr = [];
+    // create an array of html elements for the cities
+    for(let i=0;i<typeList.length;i++){
+        if(breweryList[i].type === typeList[currentType].name){
+            arr.push(breweryList[i]);
+        }
+    }
+    // recreate the brewery listr
+    recreateBreweryList(arr);
+}
+const filterByTypes = () => {
+    // hide other lists
     hideCities();
-    // filter zip codes
+    // clear city list
+    typeList = [];
+    let uniqueTypeList = [];
+    // filter cities
     for(let i=0;i<breweryList.length;i++){
-        let $zip = $(`<button>${breweryList[i].zip}</button>`)
-            .attr("id","zip");
+        let amount = 0;
+        for(let j=0;j<breweryList.length;j++){
+            if(breweryList[i].type === breweryList[j].type){
+               amount = amount + 1;
+            }
+        }
+        typeList.push(new Type(breweryList[i].type,amount));
+    }
+    // remove duplicates from cityList ======================================
+    // append city list to html
+    for(let type=0;type<typeList.length;type++){
+        let $type = $(`<button>${typeList[type].name} (${typeList[type].amount})</button>`)
+            .attr("id","type"+type)
+            .addClass("type");
         // append results to city results
-        $(".zip-results").append($zip);
+        $("#type-results").append($type);
+        $("#type"+type).on("click",setResultsByType);
     }
     // set variable
-    showZips = true;
+    showTypes = true;
 }
 
-const hideZips = () => {
+const hideTypes = () => {
     // remove the city list
-    $(".zip-results").empty();
+    $("#type-results").empty();
     // set variables
-    showZips = false;
+    showTypes = false;
 }
 
-const toggleZips = () => {
-    if(showZips === false) {
-        filterByZips();
+const toggleTypes = () => {
+    if(showTypes === false) {
+        filterByTypes();
     } else {
-        hideZips();
+        hideTypes();
     }
 }
-
-// create brewery list
+/* create brewery list ***********************************************************************************************/
 const createBreweryList = () => {
     // loop through the brewery list
     for(let i=0;i<breweryList.length;i++) {
@@ -315,6 +427,11 @@ const determineSearch = () => {
     if(userInput.length === 2) {
         determineStateAbb(userInput)
     }
+    else if(userInput.length === 0) {
+        $(".search-in-progress").css("z-index","1");
+        $(".search-in-progress").css("opacity","1");
+        setTimeout(showNoResults,2000);
+    }
     else {
         searchByState(userInput);
     }
@@ -330,5 +447,5 @@ $(() => {
     $('#results-filter').on("click",showFilterOptions);
     $('#filter-close').on("click",hideFilterOptions);
     $('#filter-city').on("click",toggleCities);
-    $('#filter-zip').on("click",toggleZips);
+    $('#filter-type').on("click",toggleTypes);
 });
