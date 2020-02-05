@@ -339,16 +339,17 @@ a {
 
 #results-filter {
     background-color: gray;
-    width: 40%;
+    width: 175px;
 }
 
 #results-clear {
     background-color: red;
-    width: 40%;
+    width: 175px;
 }
 
-#filter-city, #filter-zip, #filter-type {
+#filter-city, #filter-type {
     background-color: gray;
+    width: 45%;
 }
 
 
