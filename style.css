@@ -100,6 +100,7 @@ a {
 }
 
 .search-container {
+    width: 1024px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -145,8 +146,10 @@ a {
 }
 
 .search-in-progress {
-    left: 17.6%;
-    width: 1025px;
+    position: absolute;
+    top: 37.5%;
+    /*left: 22%;*/
+    width: 75%;
     height: 600px;
     background-color: rgba(0,0,0,0.75);
     color: whitesmoke;
@@ -157,6 +160,7 @@ a {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    align-self: center;
 }
 
 .result-item {

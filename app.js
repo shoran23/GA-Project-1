@@ -102,6 +102,9 @@ const showFilterOptions = () => {
 const hideFilterOptions = () => {
     // animate hide filter options
     $(".filter-info").animate({opacity: "0"});
+    // hide the filter options
+    hideCities();
+    hideTypes();
 }
 
 
@@ -190,9 +193,6 @@ const filterByCity = () => {
         cityList.push(new City(breweryList[i].city,amount));
     }
     // remove duplicates from cityList ======================================
-
-
-
 
     // append city list to html
     for(let city=0;city<cityList.length;city++){
