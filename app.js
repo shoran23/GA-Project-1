@@ -15,6 +15,7 @@ let state = "";
 let showCities = false;
 let showZips = false;
 let showTypes = false;
+let filterResults = false;
 
 // classes
 class Brewery {
@@ -51,6 +52,7 @@ const clearBreweryList = () => {
     breweryList = [];
     // remove all children from the search results div
     $(".search-results").empty();
+    filterResults = false;
 }
 
 // show brewery information
@@ -90,8 +92,10 @@ const hideBreweryInfo = () => {
 
 // show filter options
 const showFilterOptions = () => {
-    // animate show brewery info
-    $(".filter-info").animate({opacity: "1"});
+    if(filterResults === true){
+        // animate show brewery info
+        $(".filter-info").animate({opacity: "1"});
+    }
 }
 
 // hide filter options
@@ -301,6 +305,8 @@ const createBreweryList = () => {
     // hide search in progress
     $(".search-in-progress").animate({opacity: "0"});
     $(".search-in-progress").css("z-index","-1");
+    // disable filter results
+    filterResults = true;
 }
 
 // search database by state
